@@ -24,3 +24,16 @@ a{
 .mg-1{
     margin: auto!important;
 }
+.login-container{
+    background-color: #9ea7a9!important;
+
+}
+h3{
+    margin: auto!important;
+}
+.btn {
+    margin-left: auto !important;
+}
+.button-cont{
+    text-align: center;
+}

@@ -10,3 +10,7 @@ def register(request):
             'form': form
         }
         return render(request, 'register/login.html', context)
+    form = CreateUser(request.method)
+    if form.is_valid():
+        form.save()
+        return
