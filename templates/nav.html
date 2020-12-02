@@ -1,0 +1,24 @@
+
+<nav  id="navbar" class="navbar navbar-expand-lg navbar-light " style="margin-bottom:2%">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">All Pet Photos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Create pet</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Delete your pet</a>
+            </li>
+
+        </ul>
+    </div>
+    <span style="margin-right: 10px">Hello, {{ request.user }}</span>
+    <span><a href="#">log out</a></span>
+</nav>

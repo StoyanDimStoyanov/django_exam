@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block site_content %}
+    <div class="container">
+        <h1>What are you searching today?</h1><br>
+        <div class="col-12 search-container">
+            <form class="form-inline justify-content-center">
+                {% csrf_token %}
+                <input id="searchbox" class="form-control mr-sm-2 col-12 col-lg-10" type="search" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-dark " type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
