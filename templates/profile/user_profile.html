@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block site_content %}
+    <div class="container wrapper">
+        <h1>Hello, {{ request.user.username|capfirst }}!</h1>
+
+        {% if profile_picture %}
+            <img class="rounded-circle mb-3" src="../media/{{ profile_picture.profile_picture }}" alt="Generic placeholder image"
+                 width="140"
+                 height="140">
+        {% else %}
+            <img class="rounded-circle mb-3" src="https://afribary.com/authors/anonymous-user/photo"
+                 alt="Generic placeholder image" width="140"
+                 height="140">
+        {% endif %}
+        <div class="w-50 m-auto">
+            <form method="get" action="{% url 'change profile pic' %}">
+                 {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Change your picture</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    {% if announces %}
+        <h2 class='text-center'>Your Announces</h2>
+        <div class="row">
+            <div class="row">
+                {% for announce in announces %}
+                    <div class="col-lg-4">
+                    <p><strong>{{ announce.name }}</strong></p>
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ announce.image.url }}" class="card-img-top" alt="Image of {{ announce.name }}">
+                            <div class="card-body">
+                                <strong><p class="card-text">Описание: {{ announce.description }}</p>
+                                <p class="card-text">Цена: {{ announce.price }}</p>
+                                <p>Качена на: {{ announce.date_published }} </p></strong>
+                                <a href="" class="btn btn-primary">Промени обявата</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h2>Нямате обяви</h2>
+            <a href="{% url 'create announcement' %}" class="btn btn-success">Качи обява</a>
+        </div>
+    {% endif %}
+{% endblock %}
