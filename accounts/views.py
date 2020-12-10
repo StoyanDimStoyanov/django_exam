@@ -40,8 +40,11 @@ def login_view(request):
         context = {
             'authenticated': True,
         }
-        # if len(request.POST.get('next')) > 0 and request.POST.get('next'):
-        #     return redirect(request.POST.get('next'))
+        try:
+            if len(request.POST.get('next')) > 0 and request.POST.get('next'):
+                return redirect(request.POST.get('next'))
+        except:
+            pass
         return render(request, 'index.html', context)
     context = {
         'form': form,
