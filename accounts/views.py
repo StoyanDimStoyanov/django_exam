@@ -31,7 +31,7 @@ def login_view(request):
             'form': form,
         }
         return render(request, 'accounts/login.html', context)
-    form = LogInForm(request)
+    form = LogInForm(request.POST)
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(username=username, password=password)

@@ -7,6 +7,9 @@ h1 {
 }
 
 a {
+    color: red !important;
+}
+ul li a {
     color: white !important;
 }
 

@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import os
+
+from shop.forms import CreateAnnounceForm
 from shop.models import Announcement
 from user_profile.forms import ChangeProfilePic
 from user_profile.models import ProfilePic
@@ -8,19 +11,22 @@ from user_profile.models import ProfilePic
 
 @login_required
 def user_profile(request, pk):
-    if request.method == 'GET':
-        try:
+    if request.user.id == pk:
+        if request.method == 'GET':
 
-            context = {
-                'profile_picture': ProfilePic.objects.get(user_id=pk),
-                'announces': Announcement.objects.filter(seller_id=pk)
-            }
-        except:
-            context = {
-                'profile_picture': None,
-                'announces': Announcement.objects.filter(seller_id=pk)
-            }
-        return render(request, 'profile/user_profile.html', context)
+            try:
+                context = {
+                    'profile_picture': ProfilePic.objects.get(user_id=pk),
+                    'announces': Announcement.objects.filter(seller_id=pk)
+                }
+            except:
+                context = {
+                    'profile_picture': None,
+                    'announces': Announcement.objects.filter(seller_id=pk)
+                }
+            return render(request, 'profile/user_profile.html', context)
+    else:
+        return HttpResponse("<h1 style='font-size: 3.4rem'>You are not allowed to view this page</h1>")
 
 
 @login_required

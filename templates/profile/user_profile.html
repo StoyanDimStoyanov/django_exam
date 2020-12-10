@@ -2,9 +2,9 @@
 {% block site_content %}
     <div class="container wrapper">
         <h1>Hello, {{ request.user.username|capfirst }}!</h1>
-
-        {% if profile_picture %}
-            <img class="rounded-circle mb-3" src="../media/{{ profile_picture.profile_picture }}" alt="Generic placeholder image"
+{#../media/{{ profile_picture.profile_picture }}#}
+        {% if profile_picture.profile_picture %}
+            <img class="rounded-circle mb-3" src="{{ profile_picture.profile_picture.url }}" alt="Generic placeholder image"
                  width="140"
                  height="140">
         {% else %}
@@ -13,10 +13,7 @@
                  height="140">
         {% endif %}
         <div class="w-50 m-auto">
-            <form method="get" action="{% url 'change profile pic' %}">
-                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Change your picture</button>
-            </form>
+            <a href="{% url 'change profile pic' %}" class="btn btn-primary">Промени профилната си снимка</a>
         </div>
     </div>
     <hr>
@@ -25,15 +22,15 @@
         <div class="row">
             <div class="row">
                 {% for announce in announces %}
-                    <div class="col-lg-4">
-                    <p><strong>{{ announce.name }}</strong></p>
+                    <div style="text-align: center" class="col-lg-4 ">
+                    <h3 class="m-3"><strong>{{ announce.name }}</strong></h3>
                         <div class="card" style="width: 18rem;">
                             <img src="{{ announce.image.url }}" class="card-img-top" alt="Image of {{ announce.name }}">
                             <div class="card-body">
-                                <strong><p class="card-text">Описание: {{ announce.description }}</p>
-                                <p class="card-text">Цена: {{ announce.price }}</p>
-                                <p>Качена на: {{ announce.date_published }} </p></strong>
-                                <a href="" class="btn btn-primary">Промени обявата</a>
+                               <p class="card-text"> <strong>Описание:</strong> {{ announce.description }}</p>
+                                <p class="card-text"><strong>Цена: </strong>{{ announce.price }}</p>
+                                <p><strong>Публикувана на:</strong> {{ announce.date_published }} </p>
+                                 <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary">Промени обявата</a>
                             </div>
                         </div>
                     </div>

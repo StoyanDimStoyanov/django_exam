@@ -3,9 +3,6 @@
 {% block site_content %}
     <form action="{% url 'change profile pic' %}" enctype="multipart/form-data" method="POST">
         {{ form }}
-
-
-
         {% csrf_token %}
         <button class="btn btn-primary mt-3">Submit</button>
     </form>

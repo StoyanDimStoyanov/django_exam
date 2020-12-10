@@ -1,5 +1,8 @@
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from shop.forms import CreateAnnounceForm
@@ -51,3 +54,28 @@ def create_announce(request):
         'form': form,
     }
     return render(request, 'make_announcement.html', context)
+
+
+@login_required
+def edit_announcement(request, pk):
+
+    announce = Announcement.objects.get(pk=pk)
+    if announce.seller_id != request.user.id:
+        return HttpResponse("<h1 style='font-size: 3.4rem'>You are not allowed to edit somebody's else announce</h1>")
+    if request.method == "GET":
+
+        form = CreateAnnounceForm(instance=announce)
+        context = {
+            'form': form,
+        }
+        return render(request, 'edit_announce.html', context)
+    form = CreateAnnounceForm(request.POST, request.FILES, instance=announce)
+    if form.is_valid():
+        existing_pic = Announcement.objects.get(seller_id=request.user.id)
+        os.remove(f'media/{existing_pic.image}')
+        form.save()
+        return redirect('user profile', request.user.id)
+    context = {
+        'form': form,
+    }
+    return render(request, 'edit_announce.html', context)
