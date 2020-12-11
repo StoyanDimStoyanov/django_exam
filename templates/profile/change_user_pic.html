@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
+{% block title %}
 
+    Change profile pic
+{% endblock %}
 {% block site_content %}
     <form action="{% url 'change profile pic' %}" enctype="multipart/form-data" method="POST">
         {{ form }}

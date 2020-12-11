@@ -79,3 +79,31 @@ def edit_announcement(request, pk):
         'form': form,
     }
     return render(request, 'edit_announce.html', context)
+
+
+@login_required
+def announce_details(request, pk):
+    announce = Announcement.objects.get(pk=pk)
+    user = User.objects.get(pk=announce.seller_id)
+    can_delete = False
+    if request.user.id == user.id:
+        can_delete = True
+    context = {
+        'announce': announce,
+        'user':user,
+        'can_delete': can_delete
+    }
+    return render(request, 'announce_details.html', context)
+
+
+@login_required
+def delete_announce(request, pk):
+    announce = Announcement.objects.get(pk=pk)
+    if request.method == 'GET':
+        context = {
+            'announce': announce,
+        }
+        return render(request, 'delete_announce.html', context)
+
+    announce.delete()
+    return redirect('user profile', request.user.id)

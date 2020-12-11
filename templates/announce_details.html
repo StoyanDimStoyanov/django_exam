@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Announce details
+{% endblock %}
+
+{% block site_content %}
+    <div class="container">
+        <div class="d-flex">
+            <div class="d-inline p-2 w-50">
+                <img src="{{ announce.image.url }}" class="w-50 rounded mx-auto d-block pet-photo"
+                     alt="The photo of {{ announce.name }} is not available at the moment. Please, excuse us.">
+                <p class="mt-2">Description: {{ announce.description }}</p>
+            </div>
+            <div class="d-inline p-2 w-50">
+                <div style="text-align: left">
+
+                    <h5>Име:{{ announce.name|capfirst }}</h5>
+                    <h5>Качена от: {{ user.username|capfirst }}</h5>
+                    <h5>За контакт: {{ user.email }}</h5>
+                    {% if can_delete %}
+                        <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary col-3">Edit</a>
+                        <a href="{% url 'delete  announce' announce.id %}" class="btn btn-danger  col-3">Delete</a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

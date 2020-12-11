@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
+{% block title %}
+
+    User profile
+{% endblock %}
 {% block site_content %}
     <div class="container wrapper">
         <h1>Hello, {{ request.user.username|capfirst }}!</h1>
-{#../media/{{ profile_picture.profile_picture }}#}
         {% if profile_picture.profile_picture %}
-            <img class="rounded-circle mb-3" src="{{ profile_picture.profile_picture.url }}" alt="Generic placeholder image"
+            <img class="rounded-circle mb-3" src="{{ profile_picture.profile_picture.url }}"
+                 alt="Generic placeholder image"
                  width="140"
                  height="140">
         {% else %}
@@ -22,19 +26,33 @@
         <div class="row">
             <div class="row">
                 {% for announce in announces %}
-                    <div style="text-align: center" class="col-lg-4 ">
-                    <h3 class="m-3"><strong>{{ announce.name }}</strong></h3>
-                        <div class="card" style="width: 18rem;">
-                            <img src="{{ announce.image.url }}" class="card-img-top" alt="Image of {{ announce.name }}">
-                            <div class="card-body">
-                               <p class="card-text"> <strong>Описание:</strong> {{ announce.description }}</p>
-                                <p class="card-text"><strong>Цена: </strong>{{ announce.price }}</p>
-                                <p><strong>Публикувана на:</strong> {{ announce.date_published }} </p>
-                                 <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary">Промени обявата</a>
+
+                    <div style="text-align: center; " class="col-lg-4">
+                        <div class="col-12">
+
+                            <h3 class="m-3"><strong>{{ announce.name }}</strong></h3>
+                            <div class="card" style="">
+                                <a id="announce" style="display: inline" href="{% url 'details  announce' announce.id %}">
+                                    <img src="{{ announce.image.url }}" class="card-img-top"
+                                         alt="Image of {{ announce.name }}">
+                                    <div class="card-body">
+                                        <p class="card-text"><strong>Описание:</strong> {{ announce.description }}</p>
+                                        <p class="card-text"><strong>Цена: </strong>{{ announce.price }}</p>
+                                        <p><strong>Публикувана на:</strong> {{ announce.date_published }} </p>
+                                        {#                                <p><strong>От:</strong> {{ user.username }} </p>#}
+                                        {#                                <p><strong>За контакт:</strong> {{ user.email }} </p>#}
+                                        {#                                 <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary">Промени обявата</a>#}
+                                        {#                                 <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary">Промени обявата</a>#}
+                                    </div>
+                                </a>
                             </div>
+
                         </div>
+
                     </div>
+
                 {% endfor %}
+
             </div>
         </div>
     {% else %}

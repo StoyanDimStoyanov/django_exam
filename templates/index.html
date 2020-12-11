@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
+{% block title %}
 
+    index
+{%  endblock %}
 {% block site_content %}
     <div class="container content">
         <h1>What are you searching today?</h1><br>
@@ -8,6 +11,7 @@
                 {% csrf_token %}
                 <input id="searchbox" class="form-control mr-sm-2 col-12 col-lg-10" type="search" placeholder="Search"
                        aria-label="Search">
+
                 <button class="btn btn-dark " type="submit">Search</button>
             </form>
         </div>

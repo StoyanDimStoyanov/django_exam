@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import os
@@ -17,12 +18,14 @@ def user_profile(request, pk):
             try:
                 context = {
                     'profile_picture': ProfilePic.objects.get(user_id=pk),
-                    'announces': Announcement.objects.filter(seller_id=pk)
+                    'announces': Announcement.objects.filter(seller_id=pk),
+                    'user': User.objects.get(pk=pk)
                 }
             except:
                 context = {
                     'profile_picture': None,
-                    'announces': Announcement.objects.filter(seller_id=pk)
+                    'announces': Announcement.objects.filter(seller_id=pk),
+                    'user': User.objects.get(pk=pk)
                 }
             return render(request, 'profile/user_profile.html', context)
     else:
