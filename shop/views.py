@@ -2,7 +2,7 @@ import os
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
 from shop.forms import CreateAnnounceForm
@@ -10,11 +10,22 @@ from shop.models import Announcement
 
 
 def index(request):
+    if request.method == "GET":
+        if "term" in request.GET:
+            search_result = Announcement.objects.filter(name__istartswith=request.GET.get('term'))
+            names = [x.name for x in search_result]
+            return JsonResponse(names, safe=False)
+        context = {
+            "authenticated": request.user.is_authenticated,
+            'anonymous': request.user.is_anonymous
+        }
+        return render(request, 'index.html', context)
+    search_for = request.POST.get('search_bar')
+    result = Announcement.objects.filter(name=search_for)
     context = {
-        "authenticated": request.user.is_authenticated,
-        'anonymous': request.user.is_anonymous
+        'results': result,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'search_results.html', context)
 
 
 def search(request):
@@ -67,12 +78,14 @@ def edit_announcement(request, pk):
         form = CreateAnnounceForm(instance=announce)
         context = {
             'form': form,
+            'pk': pk,
         }
         return render(request, 'edit_announce.html', context)
     form = CreateAnnounceForm(request.POST, request.FILES, instance=announce)
     if form.is_valid():
-        existing_pic = Announcement.objects.get(seller_id=request.user.id)
-        os.remove(f'media/{existing_pic.image}')
+        existing_pic = Announcement.objects.get(pk=pk)
+        if existing_pic.seller_id == request.user.id and existing_pic.image.url != request.FILES.get('image'):
+            os.remove(f'media/{existing_pic.image}')
         form.save()
         return redirect('user profile', request.user.id)
     context = {

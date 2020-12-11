@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.template.defaultfilters import join
 
 
 class Announcement(models.Model):
@@ -32,4 +33,5 @@ class Announcement(models.Model):
     date_published = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=30, choices=CATEGORIES_CHOICES, default='Всички')
 
-
+    def __str__(self):
+        return ", ".join([self.name, f'Published on: {str(self.date_published)[:10]}'])

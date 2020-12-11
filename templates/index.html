@@ -2,14 +2,14 @@
 {% block title %}
 
     index
-{%  endblock %}
+{% endblock %}
 {% block site_content %}
     <div class="container content">
         <h1>What are you searching today?</h1><br>
         <div class="col-12 search-container">
-            <form class="form-inline justify-content-center">
+            <form method="post" class="form-inline justify-content-center">
                 {% csrf_token %}
-                <input id="searchbox" class="form-control mr-sm-2 col-12 col-lg-10" type="search" placeholder="Search"
+                <input id="search_box" class="form-control mr-sm-2 col-12 col-lg-10" name="search_bar" type="search" placeholder="Search"
                        aria-label="Search">
 
                 <button class="btn btn-dark " type="submit">Search</button>
@@ -17,5 +17,16 @@
         </div>
         <div class="push"></div>
     </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#search_box").autocomplete({
+                source: "{% url 'index page' %}",
+                minLength: 2,
+
+            });
+        });
+    </script>
 
 {% endblock %}

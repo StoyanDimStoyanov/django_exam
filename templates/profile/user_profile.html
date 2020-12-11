@@ -27,8 +27,8 @@
             <div class="row">
                 {% for announce in announces %}
 
-                    <div style="text-align: center; " class="col-lg-4">
-                        <div class="col-12">
+                    <div style="text-align: center; " class="col-lg-3">
+                        <div class="">
 
                             <h3 class="m-3"><strong>{{ announce.name }}</strong></h3>
                             <div class="card" style="">
@@ -36,13 +36,9 @@
                                     <img src="{{ announce.image.url }}" class="card-img-top"
                                          alt="Image of {{ announce.name }}">
                                     <div class="card-body">
-                                        <p class="card-text"><strong>Описание:</strong> {{ announce.description }}</p>
+{#                                        <p class="card-text"><strong>Описание:</strong> {{ announce.description }}</p>#}
                                         <p class="card-text"><strong>Цена: </strong>{{ announce.price }}</p>
                                         <p><strong>Публикувана на:</strong> {{ announce.date_published }} </p>
-                                        {#                                <p><strong>От:</strong> {{ user.username }} </p>#}
-                                        {#                                <p><strong>За контакт:</strong> {{ user.email }} </p>#}
-                                        {#                                 <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary">Промени обявата</a>#}
-                                        {#                                 <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary">Промени обявата</a>#}
                                     </div>
                                 </a>
                             </div>
