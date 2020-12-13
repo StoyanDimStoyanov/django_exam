@@ -16,7 +16,9 @@
                 <div style="text-align: left">
 
                     <h5>Име:{{ announce.name|capfirst }}</h5>
+                    <h5>Цена:{{ announce.price }} лв.</h5>
                     <h5>Качена от: {{ user.username|capfirst }}</h5>
+                    <h5>Качена на: {{ announce.date_published|date:"D d M Y" }}</h5>
                     <h5>За контакт: {{ user.email }}</h5>
                     {% if can_delete %}
                         <a href="{% url 'edit announce' announce.id %}" class="btn btn-primary col-3">Edit</a>

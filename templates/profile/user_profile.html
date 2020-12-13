@@ -32,12 +32,12 @@
 
                             <h3 class="m-3"><strong>{{ announce.name }}</strong></h3>
                             <div class="card" style="">
-                                <a id="announce" style="display: inline" href="{% url 'details  announce' announce.id %}">
+                                <a id="announce"  href="{% url 'details  announce' announce.id %}">
                                     <img src="{{ announce.image.url }}" class="card-img-top"
                                          alt="Image of {{ announce.name }}">
                                     <div class="card-body">
 {#                                        <p class="card-text"><strong>Описание:</strong> {{ announce.description }}</p>#}
-                                        <p class="card-text"><strong>Цена: </strong>{{ announce.price }}</p>
+                                        <p class="card-text"><strong>Цена: </strong>{{ announce.price }} лв.</p>
                                         <p><strong>Публикувана на:</strong> {{ announce.date_published }} </p>
                                     </div>
                                 </a>

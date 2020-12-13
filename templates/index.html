@@ -13,10 +13,48 @@
                        aria-label="Search">
 
                 <button class="btn btn-dark " type="submit">Search</button>
+
             </form>
         </div>
+         {% if all_announce %}
+       
+        <div class="row">
+            <div class="row">
+                {% for announce in all_announce %}
+
+                    <div style="text-align: center; " class="col-lg-3">
+                        <div class="">
+
+                            <h3 class="m-3"><strong>{{ announce.name }}</strong></h3>
+                            <div class="card" style="">
+                                <a id="announce"  href="{% url 'details  announce' announce.id %}">
+                                    <img src="{{ announce.image.url }}" class="card-img-top"
+                                         alt="Image of {{ announce.name }}">
+                                    <div class="card-body">
+{#                                        <p class="card-text"><strong>Описание:</strong> {{ announce.description }}</p>#}
+                                        <p class="card-text"><strong>Цена: </strong>{{ announce.price }} лв.</p>
+                                        <p><strong>Публикувана на:</strong> {{ announce.date_published }} </p>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h2>Нямате обяви</h2>
+{#            <a href="{% url 'create announcement' %}" class="btn btn-success">Качи обява</a>#}
+        </div>
+    {% endif %}
         <div class="push"></div>
     </div>
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>

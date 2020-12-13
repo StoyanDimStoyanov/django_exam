@@ -1,10 +1,12 @@
 import os
+from os.path import join
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
+from examProject.settings import BASE_DIR
 from shop.forms import CreateAnnounceForm
 from shop.models import Announcement
 
@@ -12,16 +14,17 @@ from shop.models import Announcement
 def index(request):
     if request.method == "GET":
         if "term" in request.GET:
-            search_result = Announcement.objects.filter(name__istartswith=request.GET.get('term'))
+            search_result = Announcement.objects.filter(name__icontains=request.GET.get('term'))
             names = [x.name for x in search_result]
             return JsonResponse(names, safe=False)
         context = {
             "authenticated": request.user.is_authenticated,
-            'anonymous': request.user.is_anonymous
+            'anonymous': request.user.is_anonymous,
+            'all_announce': Announcement.objects.all(),
         }
         return render(request, 'index.html', context)
     search_for = request.POST.get('search_bar')
-    result = Announcement.objects.filter(name=search_for)
+    result = Announcement.objects.filter(name__icontains=search_for)
     context = {
         'results': result,
     }
@@ -84,7 +87,9 @@ def edit_announcement(request, pk):
     form = CreateAnnounceForm(request.POST, request.FILES, instance=announce)
     if form.is_valid():
         existing_pic = Announcement.objects.get(pk=pk)
-        if existing_pic.seller_id == request.user.id and existing_pic.image.url != request.FILES.get('image'):
+        if existing_pic.seller_id == request.user.id and\
+                existing_pic.image.url != f" media/image/{request.FILES.get('image')}" \
+                and len(request.FILES) > 0:
             os.remove(f'media/{existing_pic.image}')
         form.save()
         return redirect('user profile', request.user.id)
@@ -117,6 +122,9 @@ def delete_announce(request, pk):
             'announce': announce,
         }
         return render(request, 'delete_announce.html', context)
-
+    pic_to_delete = announce.image.url
+    print(os.path.join(BASE_DIR, pic_to_delete))
+    os.remove(f'media/{announce.image}')
     announce.delete()
+
     return redirect('user profile', request.user.id)

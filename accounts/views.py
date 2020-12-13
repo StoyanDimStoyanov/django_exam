@@ -17,7 +17,7 @@ def register(request):
             form.save()
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
             login(request, user)
-            return render(request, 'index.html')
+            return redirect('index page')
         context = {
             'form': form,
         }
@@ -45,7 +45,7 @@ def login_view(request):
                 return redirect(request.POST.get('next'))
         except:
             pass
-        return render(request, 'index.html', context)
+        return redirect('index page')
     context = {
         'form': form,
     }
